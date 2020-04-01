@@ -1,14 +1,13 @@
-version: '2'
-
+version: '3.7'
 services:
   janus-gateway:
-    image: linagora/docker-janus-gateway
+    image: lklock/docker-janus:latest
+    network_mode: host
     ports:
-      - "80:80"
-      - "7088:7088"
-      - "8088:8088"
-      - "8188:8188"
-      - "8089:8089"
-      - "10000-10200:10000-10200/udp"
+    - "8880:8880"
+    - "7088:7088"
+    - "8088:8088"
+    - "8188:8188"
+    - "10000-10200:10000-10200/udp"
     environment:
-      - DOCKER_IP=${DOCKER_IP}
+    - DOCKER_IP=${DOCKER_IP}

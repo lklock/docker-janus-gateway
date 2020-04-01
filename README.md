@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/linagora/docker-janus-gateway.svg?branch=mach10)](https://travis-ci.org/linagora/docker-janus-gateway)
 
-Run janus gateway well configured for Hublin in a Docker container.
+Run janus gateway well configured in a Docker container.
 
 ## Usage
 
@@ -11,7 +11,7 @@ Assuming Docker and Docker Compose are installed:
 Build the image
 
 ```shell
-$ docker build -t linagora/janus-gateway .
+$ docker build -t lklock/docker-janus .
 ```
 
 Run the container
@@ -33,7 +33,7 @@ $ DOCKER_IP=<YOUR DOCKER IP> docker-compose up
 ```
 
 Where ports:
-  - **80**: expose janus documentation and admin/monitoring website
+  - **8880**: expose janus documentation and admin/monitoring website
   - **7088**: expose Admin/monitor server
   - **8088**: expose Janus server
   - **8188**: expose Websocket server
