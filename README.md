@@ -26,7 +26,7 @@ That's it!
 
 Details:
 
-To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/linagora/docker-janus-gateway/blob/master/docker-compose.yml). Then you'll only need to:
+To make this even easier, copy `docker-compose.yml` [from this repo](https://github.com/lklock/docker-janus-gateway/blob/master/docker-compose.yml). Then you'll only need to:
 
 ```shell
 $ DOCKER_IP=<YOUR DOCKER IP> docker-compose up
