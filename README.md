@@ -17,7 +17,7 @@ $ docker build -t lklock/docker-janus .
 Run the container
 
 ```shell
-$ DOCKER_IP=<THE IP OF YOUR DOCKER> docker run -p 80:80 -p 7088:7088 -p 8088:8088 -p 8188:8188 -p 10000-10200:10000-10200/udp lklock/docker-janus
+$ DOCKER_IP=<THE IP OF YOUR DOCKER> docker run -p 8880:8880 -p 7088:7088 -p 8088:8088 -p 8188:8188 -p 10000-10200:10000-10200/udp lklock/docker-janus
 ```
 
 Where `DOCKER_IP` is the public IP address where Docker services can be reached. This will be used by Janus to send back the right IP to Web clients (ICE candidates) so that they can communicate with Janus correctly.
