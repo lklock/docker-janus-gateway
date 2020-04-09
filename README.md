@@ -1,6 +1,6 @@
 # Janus gateway in a Docker Container
 
-[![Build Status](https://travis-ci.org/linagora/docker-janus-gateway.svg?branch=mach10)](https://travis-ci.org/linagora/docker-janus-gateway)
+[![Build Status](https://travis-ci.org/lklock/docker-janus-gateway.svg?branch=mach10)](https://travis-ci.org/lklock/docker-janus-gateway)
 
 Run janus gateway well configured in a Docker container.
 
