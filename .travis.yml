@@ -5,8 +5,8 @@ services:
 
 before_install:
   - export BUILD_ID=${TRAVIS_COMMIT::8}
-  - export BASE_REPO=linagora/janus-gateway
-  - export HUB_REPO=linagora/janus-gateway
+  - export BASE_REPO=lklock/docker-janus-gateway
+  - export HUB_REPO=lklock/docker-janus-gateway
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG ; fi`
   - docker build -t $BASE_REPO:$BUILD_ID .
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
