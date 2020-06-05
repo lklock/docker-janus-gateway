@@ -5,21 +5,19 @@ LABEL description="Janus WebRTC server"
 
 # Prerequisites installation
 
-RUN apt-get update
-
-RUN apt-get install -y \
-	build-essential \
+RUN apt-get update && apt-get install -y \
 	autoconf \
 	automake \
 	autotools-dev \
+	build-essential \
 	cmake \
 	dh-make \
 	debhelper \
 	devscripts \
 	doxygen \
 	fakeroot \
-	git \
 	gengetopt \
+	git \
 	graphviz \
 	gtk-doc-tools \
 	libtool \
@@ -30,48 +28,46 @@ RUN apt-get install -y \
 	xutils
 
 RUN apt-get install -y \
-	libconfig-dev \
-	zlib1g-dev \
-	libmicrohttpd-dev \
-	libjansson-dev \
-	libssl-dev \
-	libsofia-sip-ua-dev \ 
-	libglib2.0-dev \
-	libopus-dev \
-	libogg-dev \
-	libwebsockets-dev \
-	libavutil-dev \
 	libavcodec-dev \
 	libavformat-dev \
-	liblua5.3-dev \
+	libavutil-dev \
+	libconfig-dev \
 	libcurl4-openssl-dev \
-	libnanomsg-dev
+	libglib2.0-dev \
+	libjansson-dev \
+	liblua5.3-dev \
+	libmicrohttpd-dev \
+	libnanomsg-dev \
+	libogg-dev \
+	libopus-dev \
+	libsofia-sip-ua-dev \ 
+	libssl-dev \
+	libwebsockets-dev \
+	zlib1g-dev
 
 RUN git clone https://github.com/sctplab/usrsctp && cd usrsctp && ./bootstrap \
-	&& ./configure --prefix=/usr && make && sudo make install
+        && ./configure CFLAGS="-Wno-error=cpp" --prefix=/usr && make && sudo make install && rm -fr /usrsctp
 
 RUN wget https://github.com/cisco/libsrtp/archive/v2.3.0.tar.gz \
         && tar xfv v2.3.0.tar.gz  && cd libsrtp-2.3.0 \
         && ./configure --prefix=/usr --enable-openssl \
-        && make shared_library && sudo make install
+        && make shared_library && sudo make install && rm -fr /libsrtp-2.3.0 && rm -f /v2.3.0.tar.gz
 
-RUN git clone https://gitlab.freedesktop.org/libnice/libnice.git/ && cd libnice \
-	&& ./autogen.sh && ./configure --prefix=/usr CFLAGS="-Wno-error=format -Wno-error=cast-align" \
-        && make && sudo make install
+RUN git clone https://gitlab.freedesktop.org/libnice/libnice.git/ && cd libnice && git checkout 0.1.16 \
+        && ./autogen.sh && ./configure --prefix=/usr CFLAGS="-Wno-error=format -Wno-error=cast-align" \
+        && make && sudo make install && rm -fr /libnice
 
 # Janus WebRTC Installation
 
-RUN mkdir -p /usr/src/janus /var/janus/log /var/janus/data /var/janus/html
+RUN mkdir -p /usr/src/janus /var/janus/log /var/janus/data /var/janus/html \
+        && cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.9.5.tar.gz \
+        && tar -xzf v0.9.5.tar.gz && cd janus-gateway-0.9.5 \
+        && cp -r /usr/src/janus/janus-gateway-0.9.5/html/* /var/janus/html \
+        && sh autogen.sh \
+        && ./configure --prefix=/var/janus --disable-rabbitmq --disable-mqtt \
+        && make && make install && make configs \
+        && rm -rf /usr/src/janus
 
-RUN cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.9.4.tar.gz
-
-RUN cd /usr/src/janus && tar -xzf v0.9.4.tar.gz && cd janus-gateway-0.9.4 && \
-	cp -r /usr/src/janus/janus-gateway-0.9.4/html/* /var/janus/html
-	
-RUN cd /usr/src/janus/janus-gateway-0.9.4 && sh autogen.sh && \
-	./configure --prefix=/var/janus --disable-rabbitmq --disable-mqtt && \
-	make && make install && make configs && \
-	rm -rf /usr/src/janus
 
 EXPOSE 8880
 EXPOSE 8088/tcp 8188/tcp
