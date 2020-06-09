@@ -60,9 +60,9 @@ RUN git clone https://gitlab.freedesktop.org/libnice/libnice.git/ && cd libnice 
 # Janus WebRTC Installation
 
 RUN mkdir -p /usr/src/janus /var/janus/log /var/janus/data /var/janus/html \
-        && cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.9.5.tar.gz \
-        && tar -xzf v0.9.5.tar.gz && cd janus-gateway-0.9.5 \
-        && cp -r /usr/src/janus/janus-gateway-0.9.5/html/* /var/janus/html \
+        && cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.10.0.tar.gz \
+        && tar -xzf v0.10.0.tar.gz && cd janus-gateway-0.10.0 \
+        && cp -r /usr/src/janus/janus-gateway-0.10.0/html/* /var/janus/html \
         && sh autogen.sh \
         && ./configure --prefix=/var/janus --disable-rabbitmq --disable-mqtt \
         && make && make install && make configs \
